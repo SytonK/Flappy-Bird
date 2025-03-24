@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         gameOverMenu.SetActive(true);
         scoreCanvas.SetActive(false);
         SetScore();
-        Debug.Log("siln");
         audioSource.Play();
     }
 
