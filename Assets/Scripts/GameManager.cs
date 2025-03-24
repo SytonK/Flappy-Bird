@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverMenu;
     public GameObject scoreCanvas;
     public ScoreManager scoreManager;
-    public TextMeshProUGUI ScoreValue;
+    public TextMeshProUGUI scoreValue;
+    public TextMeshProUGUI bestScoreValue;
     public GameObject startCanvas;
 
     private AudioSource audioSource;
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
         Pause();
         gameOverMenu.SetActive(true);
         scoreCanvas.SetActive(false);
-        ScoreValue.SetText(scoreManager.GetScore().ToString());
+        SetScore();
         Debug.Log("siln");
         audioSource.Play();
     }
@@ -68,5 +69,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(pipes[i].gameObject);
         }
+    }
+
+    private void SetScore()
+    {
+        int score = scoreManager.GetScore();
+
+        scoreValue.SetText(score.ToString());
+
+        int currBest = PlayerPrefs.GetInt("HighScore");
+
+        if (score > currBest)
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            currBest = score;
+        }
+
+        bestScoreValue.SetText(currBest.ToString());
     }
 }
